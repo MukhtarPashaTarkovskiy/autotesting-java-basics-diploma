@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.nio.file.Paths;
 import java.time.Duration;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -67,7 +67,7 @@ public class ProductCatalogTests {
     @BeforeEach
     public void setUp() {
         String driverPath = Paths.get("drivers", "chromedriver.exe").toString();
-        System.setProperty("webdriver.chrome.driver", driverPath);
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));

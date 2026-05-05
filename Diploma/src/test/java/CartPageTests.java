@@ -8,12 +8,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 import java.nio.file.Paths;
 import java.time.Duration;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class CartPageTests {
 
@@ -32,6 +32,15 @@ public class CartPageTests {
                     "//td[contains(@class,'product-quantity')]//input[@type='number']"
     );
 
+   // buttonLadaAddToCartFromSaleSectionLocator - локатор находит кнопку "В корзину" для товара Lada в секции "Распродажа" на главной странице.
+    private By buttonLadaAddToCartFromSaleSectionLocator = By.xpath(
+            "(//aside[@id='accesspress_store_product-2']//li[contains(@class,'slick-active')]" +
+                    "[.//a[@title='Lada']]//a[contains(@class,'add_to_cart_button')])[1]"
+    );
+
+    // cartUpdatedMessageLocator - локатор находит сообщение об успешном обновлении корзины.
+    private By cartUpdatedMessageLocator = By.cssSelector(".woocommerce-message[role='alert']");
+
     // ladaLinkLocatorHomepage – локатор находит ссылку на товар "Lada"
     // в ПЕРВОМ активном слайде секции «РАСПРОДАЖА» на главной странице
     private By ladaLinkLocatorHomepage = By.xpath("(//aside[@id='accesspress_store_product-2']//li[contains(@class,'slick-active')]//a[@title='Lada'])[1]");
@@ -40,9 +49,12 @@ public class CartPageTests {
     // в карточке товара Lada, после перехода в нее из раздела Распродажа главной страницы сайта
     private By buttonLadaProductCardFromTheSectionLocator = By.xpath("//div[@id='primary']//*[@name='add-to-cart']");
 
-    // Локатор qtyInput ищет элемент, который меняет количество товаров в корзине, карточки товара Lada,
-    // после перехода в нее из раздела Распродажа главной страницы сайта
-    private By qtyInput = By.xpath("//div[@class='quantity']//input[@name='quantity']");
+//    // Локатор qtyInput ищет элемент, который меняет количество товаров в корзине, карточки товара Lada,
+//    // после перехода в нее из раздела Распродажа главной страницы сайта
+//    private By qtyInput = By.xpath("//div[@class='quantity']//input[@name='quantity']");
+
+    // Локатор qtyInput ищет поле количества товара в карточке товара Lada
+    private By qtyInput = By.cssSelector("input[name='quantity'][type='number']");
 
     // buttonCartMenuMainPageLocator - локатор ищет кнопку корзину в главном меню навигации в хедере
     private By buttonCartMenuHeadearLocator = By.xpath("//div[@id='menu']//a[contains(@href,'/cart/')]");
@@ -114,7 +126,7 @@ public class CartPageTests {
     @BeforeEach
     public void setUp() {
         String driverPath = Paths.get("drivers", "chromedriver.exe").toString();
-        System.setProperty("webdriver.chrome.driver", driverPath);
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -329,58 +341,54 @@ public class CartPageTests {
     }
 
     /* Метод testAdding5ItemsToCart тестирует добавление товара в Корзину в количестве 5. */
+    /* Метод testAdding5ItemsToCart тестирует изменение количества товара Lada в корзине на 5. */
+    /* Метод testAdding5ItemsToCart тестирует изменение количества товара Lada в корзине на 5. */
+    /* Метод testAdding5ItemsToCart тестирует изменение количества товара в корзине на 5. */
+    /* Метод testAdding5ItemsToCart тестирует изменение количества товара в корзине на 5. */
+    /* Метод testAdding5ItemsToCart тестирует изменение количества товара в корзине на 5. */
     @Test
     public void testAdding5ItemsToCart() {
         driver.navigate().to(urlHomePage);
 
-        // Находим карточку товара Lada (li, не клон) и кликаем по ней через Actions
-        WebElement ladaCard = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(ladaLinkLocatorHomepage)
-        );
+        // Добавляем книгу в корзину через Каталог -> Книги -> кнопка "В корзину"
+        WebElement buttonCatalog = wait.until(ExpectedConditions.elementToBeClickable(headerMenuCatalogLocator));
+        buttonCatalog.click();
 
-        Actions actions = new Actions(driver);
-        actions.moveToElement(ladaCard).click().perform();
+        WebElement linkBooksPage = wait.until(ExpectedConditions.elementToBeClickable(linkBooksPageLocator));
+        linkBooksPage.click();
 
-        // После перехода на страницу карточки, проверяем адрес страницы.
-        wait.until(ExpectedConditions.urlContains("/product/lada/"));
-        String currentUrl = driver.getCurrentUrl();
-        assertTrue(currentUrl.contains("/product/lada/"),
-                "Ожидали URL страницы с карточкой товара Lada, но получили: " + currentUrl);
+        WebElement buttonBooksCart = wait.until(ExpectedConditions.elementToBeClickable(martinFordAddToCartLocator));
+        buttonBooksCart.click();
 
-        // Добавление товара в корзину, в количестве 5 шт.
-        WebElement quantity = wait.until(ExpectedConditions.elementToBeClickable(qtyInput));
-        quantity.clear();
-        quantity.sendKeys("5");
+        // Ждём появления кнопки "Подробнее", чтобы убедиться, что товар добавился
+        WebElement detailsButton = wait.until(ExpectedConditions.visibilityOfElementLocated(buttonDetailsLocator));
+        detailsButton.click();
 
-        // Находим кнопку 'В корзину' и кликаем по ней.
-        WebElement elementAddCard = wait.until(ExpectedConditions.elementToBeClickable(buttonLadaProductCardFromTheSectionLocator));
-        elementAddCard.click();
-
-        // В хедере находим кнопку корзины в меню и кликаем по ней.
-        WebElement cartItemMainMenu = wait.until(ExpectedConditions.elementToBeClickable(buttonCartMenuHeadearLocator));
-        cartItemMainMenu.click();
-
-
-        // Проверяем, что мы попали на страницу корзины.
+        // Проверяем, что попали на страницу корзины
         wait.until(ExpectedConditions.urlContains("/cart/"));
         String currentCartUrl = driver.getCurrentUrl();
         assertTrue(currentCartUrl.contains("/cart/"),
                 "Ожидали URL страницы Корзины, но получили: " + currentCartUrl);
 
-        // Проверяем, что на странице Корзины появилась строка с товаром Lada.
-        WebElement ladaLink = wait.until(ExpectedConditions.visibilityOfElementLocated(ladaLinkLocator));
-        assertTrue(ladaLink.isDisplayed(),
-                "Ожидали видеть товар Lada в корзине, но элемент не отображается");
+        // Проверяем, что в корзине есть нужная книга
+        WebElement bookTextInCart = wait.until(ExpectedConditions.visibilityOfElementLocated(bookTextInCardtLocator));
+        assertTrue(bookTextInCart.isDisplayed(),
+                "Ожидали видеть книгу в корзине, но элемент не отображается");
 
-        //Проверяем наличие товара наименованием Lada в корзине.
-        WebElement ladaQtyInput = wait.until(ExpectedConditions.visibilityOfElementLocated(ladaQtyLocator));
-        int actualQty = Integer.parseInt(ladaQtyInput.getAttribute("value"));
+        // Меняем количество товара в корзине на 5
+        WebElement bookQtyInput = wait.until(ExpectedConditions.elementToBeClickable(bookCountInCardtLocator));
+        bookQtyInput.clear();
+        bookQtyInput.sendKeys("5");
+
+        // Проверяем, что значение в поле количества стало 5
+        wait.until(ExpectedConditions.attributeToBe(bookCountInCardtLocator, "value", "5"));
+
+        bookQtyInput = wait.until(ExpectedConditions.visibilityOfElementLocated(bookCountInCardtLocator));
+        int actualQty = Integer.parseInt(bookQtyInput.getAttribute("value"));
+
         assertEquals(5, actualQty,
-                "Количество товара Lada в корзине неверное");
+                "Количество товара в корзине неверное");
     }
 
-
 }
-
-
 

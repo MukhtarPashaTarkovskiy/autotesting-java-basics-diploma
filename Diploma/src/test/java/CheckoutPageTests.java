@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class CheckoutPageTests {
 
@@ -229,7 +229,7 @@ public class CheckoutPageTests {
     @BeforeEach
     public void setUp() {
         String driverPath = Paths.get("drivers", "chromedriver.exe").toString();
-        System.setProperty("webdriver.chrome.driver", driverPath);
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
