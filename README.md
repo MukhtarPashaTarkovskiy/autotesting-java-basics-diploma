@@ -89,7 +89,7 @@ autotesting-java-basics-diploma
 ### 1. Клонировать репозиторий
 
 ```bash
-git clone https://github.com/kasp222222/autotesting-java-basics-diploma.git
+git clone https://github.com/MukhtarPashaTarkovskiy/autotesting-java-basics-diploma.git
 ```
 
 ### 2. Перейти в папку Maven-проекта
