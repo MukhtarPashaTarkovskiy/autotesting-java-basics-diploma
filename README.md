@@ -1,112 +1,180 @@
-# UI Test Automation for E-commerce Web Application
+# UI-автотесты интернет-магазина на Java
 
-Automated UI testing project for the main user scenarios of an e-commerce web application.
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Selenium](https://img.shields.io/badge/Selenium-WebDriver-43B02A)
+![JUnit](https://img.shields.io/badge/JUnit-5-25A162)
+![Maven](https://img.shields.io/badge/Maven-3-C71A36)
+![Test Type](https://img.shields.io/badge/Test%20Type-UI%20Automation-blue)
 
-The project is implemented in **Java** using **Selenium WebDriver**, **JUnit 5** and **Maven** following the **Page Object Model (POM)** approach.
+Проект автоматизированного UI-тестирования основных пользовательских сценариев интернет-магазина.
 
----
+Автотесты реализованы на Java с использованием Selenium WebDriver, JUnit 5 и Maven.
 
-## Technologies
+## О проекте
 
-- Java
-- Selenium WebDriver
-- JUnit 5
-- Maven
-- ChromeDriver (via Selenium Manager)
-- IntelliJ IDEA
-- Git & GitHub
+Проект демонстрирует практические навыки разработки UI-автотестов для веб-приложения:
 
----
+- подготовку тестовых сценариев;
+- работу с Selenium WebDriver;
+- поиск элементов через XPath и CSS selectors;
+- применение явных ожиданий;
+- проверку результатов с помощью assertions;
+- запуск тестов через Maven;
+- организацию тестов по функциональным областям приложения.
 
-## Tested Application
+Тестируемое приложение:
 
-Test environment:
-
+```text
 http://intershop5.skillbox.ru/
-
-> The application is an external testing environment and is not part of this repository.  
-> The website structure and test data may change independently of this project.
-
----
-
-# Project Features
-
-The project automates the main user scenarios of the online store.
-
-Covered functionality includes:
-
-- User registration
-- User authorization
-- Home page verification
-- Product catalog
-- Shopping cart
-- Checkout process
-
----
-
-# Project Structure
-
-```
-Diploma
-│
-├── src
-│   └── test
-│       └── java
-│           ├── RegistrationAndAuthorizationTests.java
-│           ├── HomePageTests.java
-│           ├── ProductCatalogTests.java
-│           ├── CartPageTests.java
-│           └── CheckoutPageTests.java
-│
-├── pom.xml
-└── README.md
 ```
 
----
+> Интернет-магазин является внешним тестовым стендом и не входит в состав репозитория.  
+> Доступность сайта, тестовые данные и HTML-разметка могут изменяться независимо от проекта.
 
-# Testing Approach
+## Технологии и инструменты
 
-The project demonstrates practical implementation of UI automation testing using:
+| Технология | Назначение |
+|---|---|
+| Java 17 | Язык разработки автотестов |
+| Selenium WebDriver | Взаимодействие с браузером и элементами интерфейса |
+| Selenium Manager | Автоматический подбор совместимого драйвера браузера |
+| JUnit 5 | Организация, запуск и проверка результатов тестов |
+| Maven | Управление зависимостями и запуск тестов |
+| Maven Surefire Plugin | Запуск JUnit-тестов через Maven |
+| XPath и CSS selectors | Поиск элементов страницы |
+| Git и GitHub | Контроль версий и хранение проекта |
+| IntelliJ IDEA | Среда разработки |
 
-- Functional Testing
-- Regression Testing
-- Smoke Testing
-- End-to-End Scenarios
-- Explicit Waits
-- Assertions
-- Page Object Model (POM)
+## Покрытие тестами
 
----
+| Функциональная область | Покрытые сценарии |
+|---|---|
+| Главная страница | Переходы по разделам, открытие товара из промоблока, переход к авторизации |
+| Каталог | Поиск, переходы через хедер и футер, открытие карточки товара |
+| Корзина | Добавление товара, изменение количества, удаление и восстановление |
+| Купоны | Применение купона в корзине и при оформлении заказа |
+| Оформление заказа | Заполнение формы, выбор оплаты, проверка обязательных полей |
+| Регистрация | Создание нового пользователя |
+| Авторизация | Вход зарегистрированного пользователя |
+| Восстановление пароля | Проверка сценария восстановления доступа |
 
-# Running the Tests
+## Тестовые классы
 
-Clone repository
+| Класс | Проверяемая функциональность |
+|---|---|
+| `HomePageTests` | Главная страница и основные переходы |
+| `ProductCatalogTests` | Каталог, поиск, категории и карточки товаров |
+| `CartPageTests` | Работа с товарами в корзине |
+| `CheckoutPageTests` | Форма и процесс оформления заказа |
+| `RegistrationAndAuthorizationTests` | Регистрация, авторизация и восстановление пароля |
+
+## Реализованные технические решения
+
+- запуск Chrome через Selenium WebDriver;
+- автоматическое управление драйвером через Selenium Manager;
+- явные ожидания через `WebDriverWait`;
+- XPath- и CSS-локаторы;
+- проверки через JUnit assertions;
+- подготовка тестового состояния перед выполнением сценариев;
+- закрытие браузера после завершения тестов;
+- группировка тестов по функциональным модулям;
+- запуск всех тестов, отдельного класса или отдельного метода через Maven.
+
+## Структура проекта
+
+```text
+autotesting-java-basics-diploma
+├── README.md
+├── .gitignore
+├── images
+│   ├── build-success.png
+│   └── project-structure.png
+└── Diploma
+    ├── pom.xml
+    └── src
+        └── test
+            └── java
+                ├── CartPageTests.java
+                ├── CheckoutPageTests.java
+                ├── HomePageTests.java
+                ├── ProductCatalogTests.java
+                └── RegistrationAndAuthorizationTests.java
+```
+
+### Фактическая структура проекта
+
+![Структура проекта](images/project-structure.png)
+
+## Требования для запуска
+
+Перед запуском должны быть установлены:
+
+- Java 17;
+- Apache Maven;
+- Google Chrome;
+- Git;
+- доступ к интернету.
+
+Проверка установленных версий:
+
+```bash
+java -version
+mvn -version
+git --version
+```
+
+## Запуск тестов
+
+### 1. Клонировать репозиторий
 
 ```bash
 git clone https://github.com/MukhtarPashaTarkovskiy/autotesting-java-basics-diploma.git
 ```
 
-Go to project directory
+### 2. Перейти в каталог Maven-проекта
 
 ```bash
 cd autotesting-java-basics-diploma/Diploma
 ```
 
-Run tests
+### 3. Запустить все тесты
+
+```bash
+mvn test
+```
+
+или с предварительной очисткой результатов предыдущей сборки:
 
 ```bash
 mvn clean test
 ```
 
----
+### 4. Запустить отдельный тестовый класс
 
-# Test Results
-
-The project successfully executes automated UI tests using Maven.
-
-Example output:
-
+```bash
+mvn -Dtest=CartPageTests test
 ```
+
+Другие примеры:
+
+```bash
+mvn -Dtest=HomePageTests test
+mvn -Dtest=ProductCatalogTests test
+mvn -Dtest=CheckoutPageTests test
+mvn -Dtest=RegistrationAndAuthorizationTests test
+```
+
+### 5. Запустить отдельный тестовый метод
+
+```bash
+mvn -Dtest=CartPageTests#testAdding5ItemsToCart test
+```
+
+## Результат запуска
+
+На момент контрольного запуска выполнено:
+
+```text
 Tests run: 22
 Failures: 0
 Errors: 0
@@ -115,41 +183,48 @@ Skipped: 2
 BUILD SUCCESS
 ```
 
----
+![Успешный запуск тестов](images/build-success.png)
 
-# Screenshots
+## Особенности и ограничения
 
-## Project Structure
+- Тесты работают с внешним тестовым стендом.
+- Результаты отдельных проверок могут зависеть от доступности сайта и состояния тестовых данных.
+- При изменении HTML-разметки сайта может потребоваться обновление локаторов.
+- Некоторые сценарии могут быть нестабильны из-за динамических элементов интерфейса.
+- Для запуска необходим установленный Google Chrome.
+- Совместимый драйвер браузера подбирается автоматически через Selenium Manager.
 
-![Project Structure](images/project-structure.png)
+## Что демонстрирует проект
 
----
+Проект подтверждает практические навыки в следующих областях:
 
-## Successful Test Execution
+- UI Test Automation;
+- Selenium WebDriver;
+- JUnit 5;
+- Maven;
+- тест-дизайн пользовательских сценариев;
+- работа с assertions;
+- применение explicit waits;
+- XPath и CSS selectors;
+- анализ поведения внешнего веб-приложения;
+- использование Git и GitHub.
 
-![Build Success](images/build-success.png)
+## Возможные направления развития
 
----
+- внедрение Page Object Model;
+- создание общего класса `BaseTest`;
+- вынесение URL и тестовых данных в конфигурацию;
+- добавление параметризованных тестов;
+- внедрение Allure Reports;
+- автоматическое создание скриншотов при падении тестов;
+- добавление кросс-браузерного запуска;
+- настройка CI через GitHub Actions;
+- разделение тестовых данных и тестовой логики.
 
-# Design Patterns & Best Practices
+## Автор
 
-The project follows several widely used automation testing practices:
+**Мухтар-Паша Тарковский**
 
-- Page Object Model (POM)
-- Reusable locators
-- Explicit waits
-- Readable assertions
-- Independent test methods
-- Maven project structure
+Junior QA Engineer / Junior QA Automation Engineer
 
----
-
-# Author
-
-Mukhtar-Pasha Tarkovskiy
-
-Junior QA Automation Engineer
-
-GitHub:
-
-https://github.com/MukhtarPashaTarkovskiy
+[GitHub-профиль](https://github.com/MukhtarPashaTarkovskiy)
